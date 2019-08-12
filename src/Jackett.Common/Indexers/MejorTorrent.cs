@@ -156,7 +156,7 @@ namespace Jackett.Common.Indexers
 
         class RssScraper : IScraper<IEnumerable<KeyValuePair<MTReleaseInfo, Uri>>>
         {
-            private readonly string LinkQuerySelector = "a[href*=\"/serie\"]";
+            private readonly string LinkQuerySelector = "a[href*=\"series_extend\"]";
 
             public IEnumerable<KeyValuePair<MTReleaseInfo, Uri>> Extract(IHtmlDocument html)
             {
@@ -292,7 +292,8 @@ namespace Jackett.Common.Indexers
             public IEnumerable<Season> Extract(IHtmlDocument html)
             {
                 var tvSelector = "a[href*=\"/serie-\"]";
-                var seasonsElements = html.QuerySelectorAll(tvSelector).Select(e => e.ParentElement);
+                var elements = html.QuerySelectorAll(tvSelector);
+                var seasonsElements = elements.Select(e => e.ParentElement);
                 
                 var newTvShows = new List<Season>();
 
